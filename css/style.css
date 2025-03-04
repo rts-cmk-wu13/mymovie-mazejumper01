@@ -1,0 +1,45 @@
+@import url(./layout.css);
+@import url(./base.css);
+
+.nowShowing--card {
+    flex-shrink: 0;  
+    width: 8.9rem; 
+    margin-right: 1rem;
+}
+
+.nowShowing--poster {
+   height: 13.25rem;
+}
+
+.nowShowing--list h3 {
+    font-size: 0.875rem;
+}
+
+.rating {
+    font-size: 0.75rem;
+}
+
+
+
+
+
+
+
+
+.popular--card {
+    width: 19rem;
+    height: 7.5rem;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+
+.popular--poster {
+    width: 5.313rem;
+    height: 7.5rem;
+}
+
+@media (width > 22.5rem){
+
+}

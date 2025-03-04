@@ -1,0 +1,41 @@
+header {
+display: grid;
+
+grid-template-columns: 1fr 1fr  1fr;
+justify-items: center;
+align-items: center;
+    
+}
+
+h1 {
+    grid-column: 2;
+}
+
+
+
+.nowShowing--list {
+    display: flex;
+    
+    overflow-x: scroll;
+    overflow-y: hidden;
+
+    
+    height: 17.6rem;
+
+
+}
+
+.popular--list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.nowShowing--list::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+@media (width > 22.5rem){
+
+}
