@@ -17,12 +17,13 @@ popularSectionElm.className = "popular--list"
 
 // Adds the api for both Now playing/Now showing and popular
 
+  // api for the now playing
+  const nowShowUrl = 'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1';
 
-// api for the now playing
-const nowShowUrl = 'https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1';
+  // api for the popular
+  const popularUrl = 'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1'
 
-// api for the popular
-const popularUrl = 'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1'
+
 
 
 const options = {
@@ -32,10 +33,25 @@ const options = {
     Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZWRiZDI3YzM4MTIzYzlmZjFlMWQ0ZDlhY2Q0OGM0MCIsIm5iZiI6MTc0MDk4Njc4Ny4xNiwic3ViIjoiNjdjNTU5YTNmZGVkM2I1MTZmOTFlOWViIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.VvXwQEUqpyaQPdtobcZJ8ZNBHKNaaswSOSgsDcl4WMw'
   }
 
+  
+
 };
 
 
+
+
+const genreUrl = 'https://api.themoviedb.org/3/genre/movie/list?language=en';
+
+
+fetch(genreUrl, options)
+  .then(res => res.json())
+
+
   // Fetching and making code for the Now Showing part. 
+
+
+
+
 
 fetch(nowShowUrl, options)
   .then(res => res.json())
@@ -59,18 +75,30 @@ fetch(nowShowUrl, options)
     sectionElm.innerHTML += nowShowcards;
 
 
-document.querySelector("main").append(sectionElm);
-
-
-
+  document.querySelector("main").append(sectionElm);
 
 
  // Fetching and making code for the Popular part. 
     
-  })
-  .catch(err => console.error(err));
+});
 
-  fetch(popularUrl, options)
+
+const observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if(entry.isIntersecting) {
+      //noget her
+      currentPage++
+
+      fetchPopular(currentPage)
+    }
+  })
+})
+
+let currentPage = 1;
+
+  
+function fetchPopular(page) {
+fetch(`https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`, options)
   .then(res => res.json())
   .then(data => {
     
@@ -83,13 +111,22 @@ document.querySelector("main").append(sectionElm);
           <img class="popular--poster" loading="lazy" src="https://image.tmdb.org/t/p/original${movies.poster_path}" alt="">
           <h3>${movies.title}</h3>
           <p class="rating">${rating}</p>
-          <p class="genre--ids">${movies}</p>
+          <p class="genre--ids">${genreUrl.genres}</p>
         </article>
       `;
     }).join("");
+    
 
     popularSectionElm.innerHTML += popularCards;
+    const observedPopular = popularSectionElm.querySelector("article:nth-last-child(5)");
+      observer.observe(observedPopular);
+    
 
-    document.querySelector("main").append(popularSectionElm); 
-  })
-  .catch(err => console.error(err));
+  document.querySelector("main").append(popularSectionElm); 
+    
+    
+})
+
+}
+
+fetchPopular(currentPage)

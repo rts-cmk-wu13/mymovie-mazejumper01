@@ -31,14 +31,19 @@
     height: 7.5rem;
 
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 2.5rem 2.5rem 2.5rem;
 }
 
 .popular--poster {
     width: 5.313rem;
     height: 7.5rem;
+    grid-row-start: 1 ;
+    grid-row-end: -1;
 }
+
+
+
 
 @media (width > 22.5rem){
 
