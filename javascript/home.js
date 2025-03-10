@@ -3,9 +3,7 @@
  * @param {string} nowShowingUrl
  * @returns {string}
  */
-function getIdFromNowShowing() {
-   
-}
+function getIdFromNowShowing() {}
 
 // Code for adding the section with the id nowShowing--list and popular--list
 
@@ -25,20 +23,13 @@ popularSectionElm.className = "popular--list"
 
 
 
-
 const options = {
   method: 'GET',
   headers: {
     accept: 'application/json',
     Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZWRiZDI3YzM4MTIzYzlmZjFlMWQ0ZDlhY2Q0OGM0MCIsIm5iZiI6MTc0MDk4Njc4Ny4xNiwic3ViIjoiNjdjNTU5YTNmZGVkM2I1MTZmOTFlOWViIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.VvXwQEUqpyaQPdtobcZJ8ZNBHKNaaswSOSgsDcl4WMw'
   }
-
-  
-
 };
-
-
-
 
 const genreUrl = 'https://api.themoviedb.org/3/genre/movie/list?language=en';
 
@@ -49,10 +40,6 @@ fetch(genreUrl, options)
 
   // Fetching and making code for the Now Showing part. 
 
-
-
-
-
 fetch(nowShowUrl, options)
   .then(res => res.json())
   .then(data => { 
@@ -61,7 +48,7 @@ fetch(nowShowUrl, options)
       rating = parseFloat(rating).toFixed(1);
 
         return `
-        <article class="nowShowing--card">
+        <article class="nowShowing--card" data-id="${movies.id}">
           <img class="nowShowing--poster" loading="lazy" src="https://image.tmdb.org/t/p/original${movies.poster_path}" alt="">
           <h3>${movies.title}</h3>
           <p class="rating">${rating}</p>
@@ -73,6 +60,15 @@ fetch(nowShowUrl, options)
     }).join("");
 
     sectionElm.innerHTML += nowShowcards;
+
+    document.querySelector("main").addEventListener("click", function(event) {
+      const movieCard = event.target.closest("article");
+      
+      if (movieCard) {
+        const movieId = movieCard.getAttribute("data-id");
+        window.location.href = `/detail.html?id=${movieId}`;
+      }
+    });
 
 
   document.querySelector("main").append(sectionElm);
@@ -97,6 +93,8 @@ const observer = new IntersectionObserver(function(entries) {
 let currentPage = 1;
 
   
+// Fetching popular movies
+
 function fetchPopular(page) {
 fetch(`https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`, options)
   .then(res => res.json())
@@ -107,7 +105,7 @@ fetch(`https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`, 
       rating = parseFloat(rating).toFixed(1);
 
       return `
-        <article class="popular--card">
+        <article class="popular--card" data-id="${movies.id}">
           <img class="popular--poster" loading="lazy" src="https://image.tmdb.org/t/p/original${movies.poster_path}" alt="">
           <h3>${movies.title}</h3>
           <p class="rating">${rating}</p>
@@ -118,6 +116,16 @@ fetch(`https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`, 
     
 
     popularSectionElm.innerHTML += popularCards;
+
+    document.querySelector("main").addEventListener("click", function(event) {
+      const movieCard = event.target.closest("article");
+      
+      if (movieCard) {
+        const movieId = movieCard.getAttribute("data-id");
+        window.location.href = `/detail.html?id=${movieId}`;
+      }
+    });
+    
     const observedPopular = popularSectionElm.querySelector("article:nth-last-child(5)");
       observer.observe(observedPopular);
     

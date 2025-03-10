@@ -7,8 +7,8 @@ divElm.innerHTML = `
         <h1>MyMovies</h1>
 
         <label class="switch">
-            <input type="checkbox">
-            
+            <input id="switch" type="checkbox">
+            <span class="slider round"></span>
         </label>
     </header>
     <div class="wrapper">
