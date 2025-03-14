@@ -11,8 +11,8 @@ html {
 :root {
     color-scheme: light dark;
 
-    --dark-color:hsl(0 0% 10%);
-    --light-color:hsl(0 0% 97%);
+    --dark-color:hsl(0, 0%, 0%);
+    --light-color:hsl(0, 0%, 100%);
 }
 
 [data-dark="true"] {
@@ -31,7 +31,15 @@ input, textarea {
     border: 1px solid light-dark(var(--dark-color), var(--light-color) );
 }
 
+h1, h2 { color: light-dark( #110E47, #DBE3FF)}
+
+.detail--section {
+    background-color: light-dark( white, black);
+}
+
+
 img {
     width: 100%;;
     object-fit: cover;
 }
+

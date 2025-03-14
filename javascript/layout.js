@@ -12,7 +12,7 @@ divElm.innerHTML = `
         </label>
     </header>
     <div class="wrapper">
-    <main></main>
+    <main class="home--main"></main>
     </div>
     <footer>created 2025</footer>
 `

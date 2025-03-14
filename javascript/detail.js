@@ -1,22 +1,26 @@
+let detailSectionElm = document.createElement("section");
+detailSectionElm.className = "detail--section fullw"
 
-divElm.id = "root"
+divElm.id = "detail--root"
 // Header 
 divElm.innerHTML = `
-    <header>
+    <header class="detail--header fullw">
+        <button class="back"><i class="fa-solid fa-arrow-left"></i></button>
         <label class="switch">
             <input id="switch" type="checkbox">
             <span class="slider round"></span>
         </label>
     </header>
-    <div class="wrapper">
-    <main></main>
-    </div>
+
+    <main>
+        
+    </main>
+
 `; document.querySelector("body").append(divElm)
 
 
 
-let detailSectionElm = document.createElement("section");
-detailSectionElm.className = "detail--section"
+
 
 
 
@@ -57,7 +61,7 @@ function fetchDetails() {
     fetch(detailUrl, options)
       .then(res => res.json())
       .then(detail => {
-        const main = document.querySelector("main");
+      
 
         let rating = detail.vote_average;
       rating = parseFloat(rating).toFixed(1);
@@ -65,25 +69,31 @@ function fetchDetails() {
         fetchAgeRating().then(ageRating => {
             
             //page content
-            main.innerHTML = `
+            detailSectionElm.innerHTML = `
                 
-                    <section class="movie-detail">
+                                                
                         <img class="detail--poster" loading="lazy" src="https://image.tmdb.org/t/p/original${detail.backdrop_path}" alt="">
-                        <img src="" alt="">
+                 <div class="movie--detail">
                         <h2 class="detail-name">${detail.title}</h2>
-                        <p class="agerating">${rating}</p>
+                        <p class="movie--rating"> <i class="fa-solid fa-star" style="color: #FFD43B;"></i>${rating}/10 IMDb</p>
 
-                        <div class="genres">
-                        <div class="genres">
-                                <p class="genre">${detail.genres.map(genre => genre.name).join(", ")}</p> <!-- List of genres -->
-                            </div>
-                        </div>
+                        
+                     <div class="genres">
+                     ${detail.genres.map(genre => `<button class="genre">${genre.name}</button>`).join("")}
+                     </div>
+                        
 
-                        <div class="info"><p>length</p> ${detail.runtime} <p>language</p> ${detail.spoken_languages[0].english_name} <p>rating</p> ${ageRating}</div>
-                        <p class="description">${detail.overview}</p>
-                    </section>
+                     <div class="info"><p class="length">length</p> ${detail.runtime}
+                         <p class="language">language</p> ${detail.spoken_languages[0].english_name}
+                         <p class="agerating">rating</p> ${ageRating}
+                     </div>
 
-            `;
+                     <p class="description">${detail.overview}</p>
+
+                     <div class="cast"></div>
+                 </div>
+
+            `; document.querySelector("main").append(detailSectionElm)
         });
     })
     

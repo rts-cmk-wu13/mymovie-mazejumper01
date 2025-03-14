@@ -10,8 +10,16 @@ function getIdFromNowShowing() {}
 let sectionElm = document.createElement("section")
 sectionElm.className = "nowShowing--list" 
 
+nowShowDiv = document.createElement("div")
+nowShowDiv.className = "nowshow--div"
+
+popularDiv = document.createElement("div")
+popularDiv.className = "popular--div"
+
 let popularSectionElm = document.createElement("section");
 popularSectionElm.className = "popular--list"
+
+
 
 // Adds the api for both Now playing/Now showing and popular
 
@@ -31,14 +39,19 @@ const options = {
   }
 };
 
+
+
+// link to genre api and fetching the genre api
+
 const genreUrl = 'https://api.themoviedb.org/3/genre/movie/list?language=en';
-
-
 fetch(genreUrl, options)
-  .then(res => res.json())
+ .then(res => res.json())
 
 
-  // Fetching and making code for the Now Showing part. 
+
+ // Fetching and making code for the Now Showing part. 
+
+  nowShowDiv.innerHTML = `<h2>Now showing</h2> <button class="seemore">See more</button>`
 
 fetch(nowShowUrl, options)
   .then(res => res.json())
@@ -46,12 +59,15 @@ fetch(nowShowUrl, options)
     const nowShowcards = data.results.map(movies => {
       let rating = movies.vote_average;
       rating = parseFloat(rating).toFixed(1);
-
+        
         return `
+        <h2></h2>
         <article class="nowShowing--card" data-id="${movies.id}">
           <img class="nowShowing--poster" loading="lazy" src="https://image.tmdb.org/t/p/original${movies.poster_path}" alt="">
           <h3>${movies.title}</h3>
-          <p class="rating">${rating}</p>
+          <p class="movie--rating"> <i class="fa-solid fa-star" style="color: #FFD43B;"></i>${rating}/10 IMDb</p>
+
+          
             
         </article>
         
@@ -60,6 +76,9 @@ fetch(nowShowUrl, options)
     }).join("");
 
     sectionElm.innerHTML += nowShowcards;
+
+
+
 
     document.querySelector("main").addEventListener("click", function(event) {
       const movieCard = event.target.closest("article");
@@ -71,13 +90,19 @@ fetch(nowShowUrl, options)
     });
 
 
+    
+    // appending the stuff that is inside the nowshow--wrapper
+    document.querySelector("main").append(nowShowDiv);
   document.querySelector("main").append(sectionElm);
-
-
- // Fetching and making code for the Popular part. 
     
 });
 
+
+
+
+
+
+ // Fetching and making code for the Popular part. 
 
 const observer = new IntersectionObserver(function(entries) {
   entries.forEach(function(entry) {
@@ -95,6 +120,8 @@ let currentPage = 1;
   
 // Fetching popular movies
 
+popularDiv.innerHTML = `<h2>Popular</h2> <button class="seemore">See more</button>`
+
 function fetchPopular(page) {
 fetch(`https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`, options)
   .then(res => res.json())
@@ -108,7 +135,7 @@ fetch(`https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`, 
         <article class="popular--card" data-id="${movies.id}">
           <img class="popular--poster" loading="lazy" src="https://image.tmdb.org/t/p/original${movies.poster_path}" alt="">
           <h3>${movies.title}</h3>
-          <p class="rating">${rating}</p>
+          <p class="movie--rating"> <i class="fa-solid fa-star" style="color: #FFD43B;"></i>${rating}/10 IMDb</p>
           <p class="genre--ids">${genreUrl.genres}</p>
         </article>
       `;
@@ -130,7 +157,9 @@ fetch(`https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`, 
       observer.observe(observedPopular);
     
 
-  document.querySelector("main").append(popularSectionElm); 
+     // appending the stuff that is inside the nowshow--wrapper
+     document.querySelector("main").append(popularDiv);
+     document.querySelector("main").append(popularSectionElm);
     
     
 })
