@@ -1,0 +1,131 @@
+header {
+display: grid;
+
+grid-template-columns: 1fr 1fr  1fr;
+justify-items: center;
+align-items: center;
+margin-block: 2.188rem;
+    
+}
+
+h1 {
+    grid-column: 2;
+}
+
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 1.5rem 1fr 1.5rem;
+}
+
+.wrapper > * {
+    min-width: 0;
+  }
+
+.home--main {
+    grid-column: 2 / 3
+}
+
+
+.nowshow--div, .popular--div {
+    display: flex;
+    justify-content: space-between;
+
+    margin-block-end: 1rem;
+
+}
+
+
+
+
+.nowShowing--list {
+    grid-column: 1 / -1;
+    display: flex;
+    
+    overflow-x: scroll;
+    overflow-y: hidden;
+
+    
+    height: 17.6rem;
+    
+
+}
+
+.popular--list{
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+}
+.nowShowing--list::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+
+
+
+
+/* ---------- Detailed view of the movie ----------  
+   ------------------------------------------------ */
+
+
+
+#detail--root {
+    display: grid;
+    grid-template-columns: 1fr; 
+    grid-template-rows: auto;
+    row-gap: 10rem;
+}
+
+
+.detail--header {
+    display: grid;
+    grid-template-columns: 1.43rem 1fr 1fr 1.43rem;
+}
+
+
+
+.back {
+    grid-column: 2;
+    justify-self: start;
+}
+
+
+.detail--header .switch {
+    justify-self: end;
+}
+
+.detail--section {
+    display: grid;
+    grid-template-columns: 1.5rem 1fr 1.5rem;
+}
+
+.movie--detail {
+    display: grid;
+    grid-template-columns: 1fr; 
+    grid-template-rows: auto;
+    row-gap: 1.5rem;
+
+    grid-column: 2;
+}
+
+.detail-name {
+    margin-block-start: 1.5rem;
+}
+
+
+
+
+.genres { 
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: start;
+    justify-items: start;
+    gap: 0.5rem;
+}
+
+
+@media (width > 22.5rem){
+
+}
